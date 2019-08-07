@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+# convert yaml / json to other
+import argparse
+import json
+import yaml
+import sys
+
+
+def load_yaml_or_json(file):
+    '''
+    with open(file, 'r') as f:
+        data = yaml.load(f, Loader=yaml.FullLoader)
+    '''
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Convert YAML/JSON to the other")
+    # parser.add_argument('file', help="File to convert")
+    parser.add_argument("file", nargs='?', type=argparse.FileType('r'), default=sys.stdin)
+    parser.add_argument("-j", dest="yml", help="Convert to Json", action="store_false")
+
+    args = parser.parse_args()
+
+    # yaml.load can load json/yaml
+    data = yaml.load(args.file, Loader=yaml.FullLoader)
+    if args.yml:
+        data = yaml.dump(data, default_flow_style=False)
+    else:
+        data = json.dumps(data, indent=2)
+
+    print(data)
