@@ -29,11 +29,3 @@ def allocate_cidr(all_cidrs: List[str], prefix: int) -> str:
     else:
         # Ref: https://docs.python.org/3/reference/simple_stmts.html#raise
         raise PrefixLargerThanCidrs({"prefix": prefix, "cidrs": cidrs})
-
-
-if __name__ == "__main__":
-    x = consolidate_cidrs(['192.168.0.0/24', '192.168.1.0/24'])
-    print(x)
-    from IPython import embed
-    embed()
-
