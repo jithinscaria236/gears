@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 from typing import List
-from netaddr import IPNetwork, cidr_merge, IPSet
+from netaddr import IPNetwork, IPSet
+
+
+class PrefixLargerThanAvailableCidrs(ValueError):
+    pass
 
 
 def consolidate_cidrs(cidrs: List[str]) -> List[str]:
@@ -12,6 +16,19 @@ def remove_used_cidrs(all_cidrs: List[str], used_cidrs: List[str]) -> List[str]:
     for nw in used_cidrs:
         all_cidrs.remove(IPNetwork(nw))
     return [str(nw) for nw in all_cidrs.iter_cidrs()]
+
+
+def allocate_cidr(all_cidrs: List[str], prefix: int) -> str:
+    cidrs = IPSet(all_cidrs)
+    for cidr in cidrs.iter_cidrs():
+        try:
+            return list(cidr.subnet(prefix))[0]
+        except:
+            # cidr cannot accomodate prefix
+            pass
+    else:
+        # Ref: https://docs.python.org/3/reference/simple_stmts.html#raise
+        raise PrefixLargerThanAvailableCidrs({"prefix": prefix, "cidrs": cidrs})
 
 
 if __name__ == "__main__":
