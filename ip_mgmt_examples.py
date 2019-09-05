@@ -3,7 +3,7 @@ from typing import List
 from netaddr import IPNetwork, IPSet
 
 
-class PrefixLargerThanAvailableCidrs(ValueError):
+class PrefixLargerThanCidrs(ValueError):
     pass
 
 
@@ -28,7 +28,7 @@ def allocate_cidr(all_cidrs: List[str], prefix: int) -> str:
             pass
     else:
         # Ref: https://docs.python.org/3/reference/simple_stmts.html#raise
-        raise PrefixLargerThanAvailableCidrs({"prefix": prefix, "cidrs": cidrs})
+        raise PrefixLargerThanCidrs({"prefix": prefix, "cidrs": cidrs})
 
 
 if __name__ == "__main__":
