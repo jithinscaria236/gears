@@ -22,9 +22,10 @@ def allocate_cidr(all_cidrs: List[str], prefix: int) -> str:
     cidrs = IPSet(all_cidrs)
     for cidr in cidrs.iter_cidrs():
         try:
-            return list(cidr.subnet(prefix))[0]
-        except:
+            return str(list(cidr.subnet(prefix))[0])
+        except Exception as err:
             # cidr cannot accomodate prefix
+            print(err)
             pass
     else:
         # Ref: https://docs.python.org/3/reference/simple_stmts.html#raise
