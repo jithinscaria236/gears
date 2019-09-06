@@ -6,16 +6,8 @@ import yaml
 import sys
 
 
-def load_yaml_or_json(file):
-    '''
-    with open(file, 'r') as f:
-        data = yaml.load(f, Loader=yaml.FullLoader)
-    '''
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Convert YAML/JSON to the other")
-    # parser.add_argument('file', help="File to convert")
     parser.add_argument("file", nargs='?', type=argparse.FileType('r'), default=sys.stdin)
     parser.add_argument("-j", dest="yml", help="Convert to Json", action="store_false")
 
