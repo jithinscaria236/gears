@@ -28,14 +28,14 @@
 import logging
 
 
-class DictRowToTable:
+class DictsToTable:
     def __init__(self, input={}):
         self.data = []
         self.header_width = {}
         self.output_fields = []
         if isinstance(input, dict):
             self.add_row(input)
-        if isinstance(input, list):
+        elif isinstance(input, list):
             [self.add_row(item) for item in input]
         else:
             raise ValueError(f"Invalid input")
@@ -50,6 +50,11 @@ class DictRowToTable:
         '''Function to add a row represented as a dictionary'''
         if not isinstance(d, dict):
             raise ValueError(f"This function excepts dictionary as input")
+
+        # Ensure keys and values are always string
+        d = {str(k): str(v) for k, v in d.items()}
+
+        # Calculate width of each field
         for k, v in d.items():
             try:
                 if self.header_width[k] < len(v):
@@ -82,22 +87,21 @@ class DictRowToTable:
 
         return list_of_list
 
-    def __repr__(self):
-        return str(self.__generate_output())
-
     def __str__(self):
         return "\n".join(self.__generate_output())
+
+    __repr__ = __str__
 
 
 if __name__ == "__main__":
     '''Few examples on how to use this'''
-    table1 = DictRowToTable()
+    table1 = DictsToTable()
     table1.add_row({"acc": "1", "own": "jay"})
     table1.add_row({"acc": "2", "own": "ann"})
     print(table1)
     table1.set_output_fields(['own', 'acc'])
     print(table1)
-    x.set_output_fields(['in', 'valid', 'fields'])
+    table1.set_output_fields(['in', 'valid', 'fields'])
     print(table1)
     table1.set_output_fields(['own', 'choo', 'acc', 'eehaa'])
     table1.add_row({"name": "jay", "comp": "reancloud"})
@@ -116,5 +120,5 @@ if __name__ == "__main__":
         {"Name": "Srikumar", "Project": "XYZ"}
     ]
 
-    table2 = DictRowToTable(data)
+    table2 = DictsToTable(data)
     print(table2)
