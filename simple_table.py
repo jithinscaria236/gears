@@ -39,12 +39,13 @@ class DictsToTable:
         self.data = []
         self.header_width = {}
         self.output_fields = []
-        if isinstance(input, dict):
-            self.add_row(input)
-        elif isinstance(input, list):
-            [self.add_row(item) for item in input]
-        else:
-            raise ValueError(f"Invalid input")
+        if input:
+            if isinstance(input, dict):
+                self.add_row(input)
+            elif isinstance(input, list):
+                [self.add_row(item) for item in input]
+            else:
+                raise ValueError(f"Invalid input")
 
     def set_output_fields(self, fields=[]):
         '''Use this method to set fields you want in your output and order in which they should be listed'''
