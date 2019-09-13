@@ -112,7 +112,6 @@ if __name__ == "__main__":
     print("\n".join([
         "",
         "Another object",
-        f"{'-' * 40}"
     ]))
     data = [
         {"Name": "Jayan", "Project": "ABC"},
@@ -122,3 +121,7 @@ if __name__ == "__main__":
 
     table2 = DictsToTable(data)
     print(table2)
+
+    table2.add_row({"Name": "John", "Project": "ABC", "Onsite": True, "working days per week": 5})
+    print(table2)
+
